@@ -14,8 +14,18 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(10);
-        //$numberOfPages = $posts->count()%10;
+        $posts = Post::orderBy('created_at','desc')->paginate(10);
+        return view('posts', ['postsToShow' => $posts]);
+    }
+
+    public function indexTop()
+    {
+        $posts = Post::orderBy('upvotes','desc')->paginate(10);
+        return view('posts', ['postsToShow' => $posts]);
+    }
+    public function indexUser($id)
+    {
+        $posts = Post::where('user_id',$id)->orderBy('created_at','desc')->paginate(10);
         return view('posts', ['postsToShow' => $posts]);
     }
 
@@ -99,6 +109,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+      //dd("deleted".$post->title);
+        $post->delete();
+        return redirect('/posts')->with("deleted","Your post were deleted");
     }
 }

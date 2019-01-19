@@ -7,7 +7,13 @@
 
             <h1 class="mt-4">{{$post->title}}</h1>
 
-                <button type="button" class="btn btn-primary">Upvote! <span class="badge">{{$post->upvotes}}</span></button>
+            @if ($post->user->id == Auth::user()->id)
+              <form method="POST" action="/posts/{{$post->id}}" >
+                {{method_field('DELETE')}}
+                @csrf
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            @endif
 
             <hr>
 
@@ -15,7 +21,9 @@
 
             <hr>
 
-            <p class="lead">Posted on {{$post->created_at}}
+            <p class="lead">
+                <button type="button" class="btn btn-primary">Upvote! <span class="badge">{{$post->upvotes}}</span></button>
+Posted on {{$post->created_at}}
                     by
                     {{$post->user->name}}
                   </p>
@@ -23,10 +31,12 @@
             <div class="card my-4">
               <h5 class="card-header">Leave a Comment:</h5>
               <div class="card-body">
-                <form>
+              <form method="POST" action="{{route('comments.store')}}" >
+                        @csrf
                   <div class="form-group">
-                    <textarea class="form-control" rows="3"></textarea>
-                  </div>
+                    <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+                  <input type="hidden" name="post_id" value="{{$post->id}}"/>
+                </div>
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
               </div>

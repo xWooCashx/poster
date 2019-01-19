@@ -13,12 +13,14 @@ use App\Http\Controllers\PostController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'WelcomeController@index');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('posts','PostController')->middleware('auth');
-//Route::get('posts/{id}','PostController@show');
+Route::get('/posts', 'PostController@index')->name('posts.index');
+Route::get('/top', 'PostController@indexTop')->name('posts.top');
+Route::get('/posts/user/{id}', 'PostController@indexUser')->middleware('auth');
+Route::resource('posts','PostController')->middleware('auth')->except('index');
+Route::post('/comments', 'CommentController@store')->name('comments.store')->middleware('auth');
+
