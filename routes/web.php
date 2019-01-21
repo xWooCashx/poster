@@ -23,4 +23,5 @@ Route::get('/top', 'PostController@indexTop')->name('posts.top');
 Route::get('/posts/user/{id}', 'PostController@indexUser')->middleware('auth');
 Route::resource('posts','PostController')->middleware('auth')->except('index');
 Route::post('/comments', 'CommentController@store')->name('comments.store')->middleware('auth');
+Route::post('/posts/{post_id}/{user_id}', 'UpvoteController@upvote')->middleware('auth');
 

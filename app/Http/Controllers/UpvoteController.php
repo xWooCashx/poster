@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Upvote;
+use Illuminate\Support\Facades\Session;
 
 class UpvoteController extends Controller
 {
@@ -25,7 +26,8 @@ class UpvoteController extends Controller
        return back();
         }
         else
-        return back()->with('upvote_fail',$post_id.''.$user_id);
+        Session::flash('fail',$post_id.''.$user_id);
+        return back();
 
     }
 }

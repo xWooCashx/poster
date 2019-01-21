@@ -32,9 +32,11 @@
                     </a>
                   </p>
                 </form>
-                @isset($upvote_fail)
-                <p>{{$upvote_fail}}</p>
-                @endisset
+                @if(Session::has('fail'))
+                @if(Session::get('fail')==$post->id.''.Auth::user()->id)
+                <p>Already Voted</p>
+                @endif
+                @endif
                @endauth
             <div class="card my-4">
               <h5 class="card-header">Leave a Comment:</h5>
