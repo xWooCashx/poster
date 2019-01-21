@@ -20,11 +20,21 @@
         <hr>
 
         <p class="lead">
-                <button type="button" class="btn btn-primary">Upvote! <span class="badge">{{$post->upvotes}}</span></button>
-                Posted on {{$post->created_at}}
-                by
-                <a href="/posts/user/{{$post->user_id}}">{{$post->user->name}}
-                </a></p>
+                @auth
+                <form method="POST" action="/posts/{{$post->id}}/{{Auth::user()->id}}" >
+                    @csrf
+                    <button type="submit" class="btn btn-primary">Upvotes <span class="badge">{{$post->upvotes}}</span></button>
+    Posted on {{$post->created_at}}
+                        by
+                        <a href="/posts/user/{{$post->user_id}}">{{$post->user->name}}
+                        </a>
+                      </p>
+                    </form>
+                    @isset($upvote_fail)
+                    <p>{{$upvote_fail}}</p>
+                    @endisset
+                   @endauth
+                </p>
             @endforeach
 
             {{$postsToShow->links()}}
