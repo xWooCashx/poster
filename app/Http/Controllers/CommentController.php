@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CommentController extends Controller
 {
@@ -35,6 +36,7 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request, [
             'content' => 'required|max:300',
             'post_id' => 'required'
@@ -64,9 +66,10 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function edit(Comment $comment)
+    public function edit($id)
     {
-        //
+        $comment=\App\Comment::find($id);
+        return view('comment_edit')->with('comment',$comment);
     }
 
     /**
@@ -76,9 +79,16 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comment $comment)
+    public function update(Request $request, $id)
     {
-        //
+        $comment=\App\Comment::find($id);
+        $this->validate($request, [
+            'content' => 'required|max:300'
+            ]);
+        $comment->content=$request->content;
+        $comment->save();
+        return redirect()->route('posts.show',['post'=>$comment->post]);
+        //return view("post", ["post" => $comment->post]);
     }
 
     /**
@@ -87,8 +97,11 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Comment $comment)
+    public function destroy($id)
     {
-        //
+        $comment=\App\Comment::find($id);
+        $comment->delete();
+        return back();
+
     }
 }

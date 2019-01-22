@@ -8,6 +8,9 @@
             </div>
          <!-- Post Content Column -->
     <div class="col-lg-12">
+        @if($postsToShow->count()<1)
+        <h1 class="mt-4">There is no posts yet.  :(</h1>
+        @endif
             @foreach ($postsToShow as $post)
             <h1 class="mt-4">{{$post->title}}</h1>
 

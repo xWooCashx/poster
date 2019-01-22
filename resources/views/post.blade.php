@@ -41,14 +41,16 @@
             <div class="card my-4">
               <h5 class="card-header">Leave a Comment:</h5>
               <div class="card-body">
-              <form method="POST" action="{{route('comments.store')}}" >
-                        @csrf
-                  <div class="form-group">
-                    <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
-                  <input type="hidden" name="post_id" value="{{$post->id}}"/>
-                </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+
+                  <form method="POST" action="{{route('comments.store')}}" >
+                          @csrf
+                    <div class="form-group">
+                      <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+                    <input type="hidden" name="post_id" value="{{$post->id}}"/>
+                  </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+
               </div>
             </div>
 
@@ -56,18 +58,30 @@
             @foreach ($post->comments as $comment)
             <div class="media mb-4">
                     <div class="media-body">
-                            @if ($comment->user->id == Auth::user()->id)
+
                             <div class="dropdown">
+                            <h5 class="mt-0" >
+                            {{$comment->user->name}} (on {{$comment->created_at}}):
+                            @if ($comment->user->id == Auth::user()->id)
+
                                     <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">x
                                     <span class="caret"></span></button>
                                     <ul class="dropdown-menu">
-                                      <li><a href="#">Edit</a></li>
-                                      <li><a href="#">Delete</a></li>
+                                    <li> <a  href="{{route('comments.edit',['comment_id'=>$comment->id])}}" >
+                                             <button class="btn btn-warning btn-xs btn-detail open-modal"  >
+                                                Edit
+                                             </button></a></li>
+                                    <li>
+                                        <form method="POST" action="{{route('comments.destroy',['comment_id'=>$comment->id])}}" >
+                                        {{method_field('DELETE')}}
+                                          @csrf
+                                        <button class="btn btn-danger btn-xs btn-delete delete-task" type="submit">
+                                            Delete
+                                        </button></form></li>
                                     </ul>
-                                  </div>
                             @endif
-                            <h5 class="mt-0" >      {{$comment->user->name}} (on {{$comment->created_at}}):
-                </h5>
+                        </div>
+                      </h5>
                      {{$comment->content}}
                     </div>
                   </div>

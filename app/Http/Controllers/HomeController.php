@@ -25,4 +25,20 @@ class HomeController extends Controller
     {
         return view('home');
     }
+    public function search()
+    {
+        return view('search');
+    }
+    public function searchFor(Request $request)
+    {
+  echo('asdasd');
+    // $text = $request->input('text');
+
+    // // search the members table
+     //$results = DB::table('users')->where('name', 'Like', $text)->get();
+    //    // $this->validate($request, [
+    //     //    'searchWord' => 'required|max:300'
+    //     //    ]);
+            // return response()->json($results,200);
+    }
 }

@@ -60,6 +60,9 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{route('posts.create')}}">{{ __('Upload') }}</a>
                             </li>
+                            {{-- <li class="nav-item">
+                                    <a class="nav-link" href="{{route('home.search')}}">{{ __('Search') }}</a>
+                                </li> --}}
                             <li class="nav-item">
                             <a class="nav-link" href="/posts/user/{{Auth::user()->id}}">{{ __('Your Posts') }}</a>
                                 </li>
@@ -89,27 +92,10 @@
         <main class="py-4">
             <div class="container">
             <div class="row">
-              <div class="col-lg-8">
+              <div class="col-lg-10">
             @yield('content')
               </div>
-              <div class="col-lg-3">
-                    <!-- Search Widget -->
-                    <div class="row">
-                            <div class="col-lg-12">
-                    <div class="card my-4">
-                      <h5 class="card-header">Search</h5>
-                      <div class="card-body">
-                        <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Search for...">
-                          <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button">Go!</button>
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-                </div>
-              </div>
+
             </div>
             </div>
         </main>
